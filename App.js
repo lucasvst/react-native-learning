@@ -1,5 +1,8 @@
+import React from 'react'
 import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
+
+import NavigationService from './src/NavigationService'
 
 import VoucherScanner from './src/screens/voucher-scanner/VoucherScanner'
 import CNHUploader from './src/screens/cnh-uploader/CNHUploader'
@@ -20,6 +23,14 @@ const MainNavigator = createStackNavigator({
   },
 })
 
-const App = createAppContainer(MainNavigator)
+const AppContainer = createAppContainer(MainNavigator);
 
-export default App
+export default class App extends React.Component {
+  render() {
+    return (
+      <AppContainer
+        ref={navigatorRef => NavigationService.setTopLevelNavigator(navigatorRef)}
+      />
+    );
+  }
+}

@@ -13,6 +13,6 @@ export default class CNHUploader extends Component {
                     </Button>
                 </Content>
             </Container>
-        );
+        )
     }
 }

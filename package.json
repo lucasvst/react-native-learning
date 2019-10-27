@@ -15,6 +15,7 @@
     "react-native": "0.61.2",
     "react-native-camera": "^3.8.0",
     "react-native-gesture-handler": "^1.4.1",
+    "react-native-snap-carousel": "^3.8.3",
     "react-navigation": "^4.0.10",
     "react-navigation-stack": "^1.10.3"
   },
