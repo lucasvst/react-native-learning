@@ -1,41 +1,25 @@
-import React, { PureComponent } from 'react'
-import { StyleSheet, View, Linking } from 'react-native'
-import { RNCamera } from 'react-native-camera'
+import { createAppContainer } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack'
 
-class NewCoApp extends PureComponent {
-  constructor(props) {
-    super(props)
-    this.state = { barcodes: [] }
-  }
+import VoucherScanner from './src/screens/voucher-scanner/VoucherScanner'
+import CNHUploader from './src/screens/cnh-uploader/CNHUploader'
+import Welcome from './src/screens/welcome/Welcome'
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <RNCamera
-          ref={ref => { this.camera = ref }}
-          style={styles.preview}
-          onBarCodeRead={this.onBarCodeRead}
-        />
-      </View>
-    );
-  }
-
-  onBarCodeRead = (barcode) => {
-    this.setState({ barcodes: [barcode] })
-    Linking.openURL(barcode.data)
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'black',
+const MainNavigator = createStackNavigator({
+  Welcome: {
+    screen: Welcome,
+    navigationOptions: ({ navigation }) => ({ header: null })
   },
-  preview: {
-    flex: 1,
-    width: '100%',
-  }
-});
+  VoucherScanner: {
+    screen: VoucherScanner,
+    navigationOptions: ({ navigation }) => ({ header: null })
+  },
+  CNHUploader: {
+    screen: CNHUploader,
+    navigationOptions: ({ navigation }) => ({ header: null })
+  },
+})
 
-export default NewCoApp
+const App = createAppContainer(MainNavigator)
+
+export default App
