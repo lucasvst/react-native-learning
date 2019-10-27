@@ -5,6 +5,7 @@ import { createStackNavigator } from 'react-navigation-stack'
 import NavigationService from './src/NavigationService'
 
 import VoucherScanner from './src/screens/voucher-scanner/VoucherScanner'
+import VoucherDataLoader from './src/screens/voucher-data-loader/VoucherDataLoader'
 import CNHUploader from './src/screens/cnh-uploader/CNHUploader'
 import Welcome from './src/screens/welcome/Welcome'
 
@@ -15,6 +16,10 @@ const MainNavigator = createStackNavigator({
   },
   VoucherScanner: {
     screen: VoucherScanner,
+    navigationOptions: ({ navigation }) => ({ header: null })
+  },
+  VoucherDataLoader: {
+    screen: VoucherDataLoader,
     navigationOptions: ({ navigation }) => ({ header: null })
   },
   CNHUploader: {
