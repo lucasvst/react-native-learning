@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { StyleSheet, SafeAreaView } from 'react-native'
-import { Container, Header, Content, Text, Image, View, Button } from 'native-base'
+import { StyleSheet, SafeAreaView, Dimensions, Image } from 'react-native'
+import { Container, Header, Content, Text, View, Button } from 'native-base'
 import Carousel from 'react-native-snap-carousel'
 
 import NavigationService from './../../NavigationService'
@@ -11,17 +11,23 @@ export default class CNHUploader extends Component {
         this.state = {
             carouselItems: [
                 {
-                    content: "Seu carro está a poucos passos de você!"
+                    content: "Seu carro está a poucos passos de você!",
+                    background: "#F38063",
+                    image: require('./car-orange.png')
                 },
                 {
-                    content: "Economize tempo e reduza a burocracia na compra!"
+                    content: "Economize tempo e reduza a burocracia na compra!",
+                    background: "#37A5E1",
+                    image: require('./car-blue.png')
                 },
                 {
-                    content: "Escaneie o voucher",
                     button: {
-                        label: "Vamos lá!",
-                        target: "VoucherScan"
-                    }
+                        label: "Escaneie o Voucher!",
+                        target: "VoucherScan",
+                        theme:  "light"
+                    },
+                    background: "#51AF39",
+                    image: require('./car-green.png')
                 }
             ]
         }
@@ -29,30 +35,39 @@ export default class CNHUploader extends Component {
 
     _renderItem({ item, index }) {
         const button = item.button ? (
-            <Button onPress={() => NavigationService.navigate('VoucherScanner')}>
+            <Button {...{[item.button.theme]:true}} style={styles.button} onPress={() => NavigationService.navigate('VoucherScanner')}>
                 <Text>{item.button.label}</Text>
             </Button>
         ) : null
+        const content = item.content ? (
+            <Text style={styles.item} >{item.content}</Text>
+        ) : null
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={styles.item} >{item.content}</Text>
+            <Container style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: item.background
+            }}>
+                <Image style={styles.image} source={item.image} />
+                {content}
                 {button}
-            </View>
+            </Container>
         )
     }
     render() {
         const { navigate } = this.props.navigation
         return (
-            <Container style={styles.carousel}>
+            <View style={styles.carousel}>
                 <SafeAreaView>
                     <Carousel
                         data={this.state.carouselItems}
-                        sliderWidth={250}
-                        itemWidth={250}
+                        sliderWidth={Dimensions.get('window').width}
+                        itemWidth={Dimensions.get('window').width}
                         renderItem={this._renderItem}
                     />
                 </SafeAreaView>
-            </Container>
+            </View>
         )
     }
 }
@@ -64,7 +79,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     item: {
-        textAlign: 'center',
-        color: '#000'
+        textAlign: 'center'
+    },
+    image: {
+        width: 150,
+        height: 150,
+        marginBottom: 100
     }
 })
