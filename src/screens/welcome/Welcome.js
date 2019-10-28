@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, SafeAreaView, Dimensions, Image } from 'react-native'
 import { Container, Header, Content, Text, View, Button } from 'native-base'
-import Carousel from 'react-native-snap-carousel'
+import Carousel, { Pagination } from 'react-native-snap-carousel'
 
 import NavigationService from './../../NavigationService'
 
@@ -9,6 +9,7 @@ export default class CNHUploader extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            activeSlide: 0,
             carouselItems: [
                 {
                     content: "Seu carro está a poucos passos de você!",
@@ -31,6 +32,31 @@ export default class CNHUploader extends Component {
                 }
             ]
         }
+    }
+
+    get pagination() {
+        const { carouselItems, activeSlide } = this.state
+        return (
+            <View style={styles.paginationWrapper}>
+                <Pagination
+                    dotsLength={carouselItems.length}
+                    activeDotIndex={activeSlide}
+                    containerStyle={styles.pagination}
+                    dotStyle={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 5,
+                        marginHorizontal: 8,
+                        backgroundColor: 'rgba(255, 255, 255, 0.92)'
+                    }}
+                    inactiveDotStyle={{
+                        // Define styles for inactive dots here
+                    }}
+                    inactiveDotOpacity={0.4}
+                    inactiveDotScale={0.6}
+                />
+            </View >
+        )
     }
 
     _renderItem({ item, index }) {
@@ -65,7 +91,9 @@ export default class CNHUploader extends Component {
                         sliderWidth={Dimensions.get('window').width}
                         itemWidth={Dimensions.get('window').width}
                         renderItem={this._renderItem}
+                        onSnapToItem={(index) => this.setState({ activeSlide: index })}
                     />
+                    { this.pagination }
                 </SafeAreaView>
             </View>
         )
@@ -85,5 +113,13 @@ const styles = StyleSheet.create({
         width: 150,
         height: 150,
         marginBottom: 100
+    },
+    pagination: {
+    },
+    paginationWrapper: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
     }
 })
