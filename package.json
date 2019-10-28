@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "build:apk": "cd android && ./gradlew assembleRelease && cd ..",
+    "keygen": "keytool -genkey -v -keystore android/app/zfappreact.keystore -alias zfappreact -keyalg RSA -keysize 2048 -validity 10000",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
