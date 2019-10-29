@@ -3,6 +3,8 @@ import { StyleSheet, View } from 'react-native'
 import { Container, Header, Content, Button, Text, Spinner } from 'native-base'
 import VoucherService from '../../services/VoucherService'
 
+import PendingDataCarousel from './PendingDataCarousel'
+
 class VoucherDataLoader extends Component {
     constructor(props) {
         super()
@@ -26,18 +28,23 @@ class VoucherDataLoader extends Component {
     render() {
         return (
             <View style={styles.container}>
-                {this.state.loading ? <Spinner /> : null}
-                <Text>Nome: {this.state.client.name}</Text>
-                <Text>CPF: {this.state.client.cpf}</Text>
-                <Text>email: {this.state.client.email}</Text>
-                <Text>Fabricante: {this.state.operationRequest.vehicleMake}</Text>
-                <Text>Veículo: {this.state.operationRequest.vehicleModel}</Text>
-                <Text>
-                    Ano/Modelo: {this.state.operationRequest.vehicleManufactureYear} /
-                    {this.state.operationRequest.vehicleModelYear}
-                </Text>
-                <Text>Valor: {this.state.operationRequest.vehicleValue}</Text>
-                <Text>Parcelas: {this.state.operationRequest.installments}</Text>
+                <View style={styles.data}>
+                    {this.state.loading ? <Spinner /> : null}
+                    <Text>Nome: {this.state.client.name}</Text>
+                    <Text>CPF: {this.state.client.cpf}</Text>
+                    <Text>email: {this.state.client.email}</Text>
+                    <Text>Fabricante: {this.state.operationRequest.vehicleMake}</Text>
+                    <Text>Veículo: {this.state.operationRequest.vehicleModel}</Text>
+                    <Text>
+                        Ano/Modelo: {this.state.operationRequest.vehicleManufactureYear} /
+                        {this.state.operationRequest.vehicleModelYear}
+                    </Text>
+                    <Text>Valor: {this.state.operationRequest.vehicleValue}</Text>
+                    <Text>Parcelas: {this.state.operationRequest.installments}</Text>
+                </View>
+                <View style={styles.carousel}>
+                    <PendingDataCarousel />
+                </View>
             </View>
         )
     }
@@ -59,6 +66,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    data: {},
+    carousel: {
+        marginTop: 30
+    }
 })
 
 export default VoucherDataLoader
